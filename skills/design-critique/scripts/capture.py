@@ -16,10 +16,11 @@ Saved PNG paths are printed one per line so the skill can Read them.
 import argparse
 import os
 import sys
+import tempfile
 
 SCRATCH = os.environ.get(
     "CLAUDE_SCRATCHPAD",
-    "/private/tmp/claude-501/-Users-designer-teloslabs/scratchpad",
+    os.path.join(tempfile.gettempdir(), "design-critique"),
 )
 
 

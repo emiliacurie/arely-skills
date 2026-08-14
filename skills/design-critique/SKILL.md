@@ -8,7 +8,7 @@ description: >
   what's shown. Delivers all four critiques plus a synthesis in chat.
   Use when the user says "critique", "design critique", "crit this", "review this design",
   "feedback on this design", "panel review", "how's the design", or "design feedback". This is
-  visual-craft critique, not usability testing (usability-test) or a heuristic audit (ux-audit).
+  visual-craft critique. Usability testing and heuristic audits are separate concerns.
 user-invokable: true
 argument-hint: "[url | image path | figma] [--focus \"typography/color/flow\"]"
 license: MIT
@@ -56,7 +56,7 @@ fill-in-the-blank templates. Skip any the user already answered in their request
 
 1. **Goal, audience, stage** — what is this flow for, who's it for, and is it early concept or near-ship?
    (Sets the bar; the panel critiques against goals, and stage controls how nitpicky to get.)
-2. **Design system to apply** — BUNKER DS, a CSS/token file, Figma variables, or "none / universal
+2. **Design system to apply** — a named system, a CSS/token file, Figma variables, or "none / universal
    principles"? If a system is named or detectable, inspect it and check adherence; otherwise critique
    against universal fundamentals.
 3. **Focus or "do not touch" areas** (optional) — anything specific to zoom in on or leave alone?
