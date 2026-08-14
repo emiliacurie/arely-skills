@@ -20,7 +20,7 @@ import tempfile
 
 SCRATCH = os.environ.get(
     "CLAUDE_SCRATCHPAD",
-    os.path.join(tempfile.gettempdir(), "design-critique"),
+    tempfile.gettempdir(),
 )
 
 
