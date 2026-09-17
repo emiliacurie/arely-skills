@@ -7,6 +7,7 @@ Claude Code skills I built for my own design work, shared openly. Free to use, M
 | Skill | What it does |
 | --- | --- |
 | [`design-critique`](skills/design-critique) | Runs a four-designer critique panel on a UI's visual craft |
+| [`ux-audit-panel`](skills/ux-audit-panel) | Runs a heuristic UX audit with independent evaluators and fills out the audit spreadsheet |
 
 More will land here over time.
 
@@ -54,7 +55,66 @@ and it skips straight to the crit.
 
 ### What this is not
 
-Visual craft only. For usability testing or a heuristic audit, use a different skill.
+Visual craft only. For a scored heuristic audit, use [`ux-audit-panel`](skills/ux-audit-panel).
+
+## ux-audit-panel
+
+A heuristic audit run by several evaluators who never see each other's work.
+
+Point it at a site and it captures the evidence once, then launches one subagent per evaluator.
+Each scores the same 49 statements from a different designer perspective, blind to the others.
+Their scores are averaged into a spreadsheet, and the places where they disagreed become a
+separate report.
+
+The disagreements are the point. A single reviewer gives you one reading of a screen and you
+never learn that another reading existed. Running Linear through it, the accessibility lens and
+the visual craft lens both scored the homepage a 4 while the first-time-user lens scored it a 1,
+on eight separate statements. All three were right about the same page.
+
+**It accepts:**
+
+- a localhost or live URL
+- several URLs that make up a flow
+- a folder of screenshots, for competitors or native apps
+
+**It gives you:**
+
+- the audit spreadsheet filled in, with a column per evaluator and every note in its own voice
+- a global score and a score per heuristic category
+- a divergence report listing every statement the panel split on, worst spread first
+- the issues multiple evaluators flagged independently, which is the closest thing to confirmation
+  this method offers
+
+Agreement tells you what to fix. Disagreement tells you what to take to real users.
+
+**The 49 statements** cover consistency, aesthetic and minimalism, error recovery, recognition
+over recall, accessibility, attention, system status, matching the real world, and hierarchy.
+Every evaluator answers all of them, so their scores stay comparable. The perspective changes
+what each one notices, never what they are scoring.
+
+Statements with no evidence behind them are marked N/A and dropped from the score rather than
+guessed at. A whole category can drop out this way, and the skill tells you when it does.
+
+### Usage
+
+```
+/ux-audit-panel https://example.com
+/ux-audit-panel https://example.com https://example.com/pricing https://example.com/signup
+```
+
+It asks what to audit, how many evaluators (3 by default, 5 maximum), where to save, and the
+project details that head the spreadsheet. Then it runs.
+
+It also triggers on plain language: "audit this site", "heuristic audit", "run a UX audit".
+
+### Requirements
+
+```bash
+npm install -g @playwright/cli
+pip install openpyxl
+```
+
+Everything runs on Claude Code subagents under your own subscription. No API key, no SDK.
 
 ## Install
 
@@ -63,14 +123,17 @@ Clone the repo and copy the skill into your Claude Code skills folder:
 ```bash
 git clone https://github.com/emiliacurie/arely-skills.git
 cp -R arely-skills/skills/design-critique ~/.claude/skills/
+cp -R arely-skills/skills/ux-audit-panel ~/.claude/skills/
 ```
 
 That makes it available in every project. To scope it to one project instead, copy it into that
 project's `.claude/skills/` folder.
 
-Restart Claude Code, then run `/design-critique`.
+Restart Claude Code, then run `/design-critique` or `/ux-audit-panel`.
 
 ### Requirements
+
+#### design-critique
 
 Nothing extra for critiquing pasted images or Figma frames.
 
@@ -82,6 +145,13 @@ playwright install chromium
 ```
 
 Figma support uses whichever Figma MCP server you already have connected.
+
+#### ux-audit-panel
+
+```bash
+npm install -g @playwright/cli
+pip install openpyxl
+```
 
 ## License
 
